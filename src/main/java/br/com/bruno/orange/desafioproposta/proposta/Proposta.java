@@ -21,7 +21,7 @@ public class Proposta {
 	private Long id;
 
 	@CpfOuCnpj
-	private String cpf_cnpj;
+	private String cpfCnpj;
 
 	@Email
 	@NotNull
@@ -46,7 +46,7 @@ public class Proposta {
 
 	public Proposta(String cpf_cnpj2, @Email @NotNull @NotBlank String email2, @NotNull @NotBlank String nome2,
 			@NotNull @NotBlank String endereco2, @NotNull @Positive BigDecimal salario2) {
-		this.cpf_cnpj = cpf_cnpj2;
+		this.cpfCnpj = cpf_cnpj2;
 		this.email = email2;
 		this.nome = nome2;
 		this.endereco = endereco2;
@@ -57,8 +57,8 @@ public class Proposta {
 		return id;
 	}
 
-	public String getCpf_cnpj() {
-		return cpf_cnpj;
+	public String getCpfCnpj() {
+		return cpfCnpj;
 	}
 
 	public String getEmail() {
@@ -77,5 +77,4 @@ public class Proposta {
 		return salario;
 	}
 
-	
 }

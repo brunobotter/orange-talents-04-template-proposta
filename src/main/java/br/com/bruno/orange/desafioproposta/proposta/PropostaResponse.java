@@ -10,7 +10,7 @@ public class PropostaResponse {
 	}
 	
 	public PropostaResponse(Proposta proposta) {
-		this.cpf_cnpj = proposta.getCpf_cnpj();
+		this.cpf_cnpj = proposta.getCpfCnpj();
 		this.id = proposta.getId();
 		this.email = proposta.getEmail();
 		this.endereco = proposta.getEndereco();
