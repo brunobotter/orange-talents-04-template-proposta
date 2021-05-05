@@ -3,6 +3,8 @@ package br.com.bruno.orange.desafioproposta.proposta;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import br.com.bruno.orange.desafioproposta.cartao.RestricaoCartao;
+import br.com.bruno.orange.desafioproposta.cartao.SolicitacaoCartaoRequest;
 import br.com.bruno.orange.desafioproposta.validacao.CpfOuCnpj;
 
 @Entity
@@ -40,17 +44,32 @@ public class Proposta {
 	@Positive
 	private BigDecimal salario;
 
+	@Enumerated(EnumType.STRING)
+	private RestricaoCartao restricao;
+
 	@Deprecated
 	public Proposta() {
 	}
+	
+	public Proposta(String cpfCnpj, @Email @NotNull @NotBlank String email, @NotNull @NotBlank String nome,
+			@NotNull @NotBlank String endereco, @NotNull @Positive BigDecimal salario) {
+		super();
+		this.cpfCnpj = cpfCnpj;
+		this.email = email;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.salario = salario;
+	}
 
-	public Proposta(String cpf_cnpj2, @Email @NotNull @NotBlank String email2, @NotNull @NotBlank String nome2,
-			@NotNull @NotBlank String endereco2, @NotNull @Positive BigDecimal salario2) {
-		this.cpfCnpj = cpf_cnpj2;
-		this.email = email2;
-		this.nome = nome2;
-		this.endereco = endereco2;
-		this.salario = salario2;
+	public Proposta(String cpfCnpj, @Email @NotNull @NotBlank String email, @NotNull @NotBlank String nome,
+			@NotNull @NotBlank String endereco, @NotNull @Positive BigDecimal salario, RestricaoCartao restricao) {
+		super();
+		this.cpfCnpj = cpfCnpj;
+		this.email = email;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.salario = salario;
+		this.restricao = restricao;
 	}
 
 	public Long getId() {
@@ -75,6 +94,19 @@ public class Proposta {
 
 	public BigDecimal getSalario() {
 		return salario;
+	}
+
+	public RestricaoCartao getRestricao() {
+		return restricao;
+	}
+
+	public SolicitacaoCartaoRequest toModelCartao() {
+		return new SolicitacaoCartaoRequest(cpfCnpj, nome, id.toString());
+	}
+
+	public void adicionaRestricao(RestricaoCartao elegivel) {
+		this.restricao = elegivel;
+		
 	}
 
 }

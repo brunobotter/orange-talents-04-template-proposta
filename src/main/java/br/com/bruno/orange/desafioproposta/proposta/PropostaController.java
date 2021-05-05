@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.bruno.orange.desafioproposta.cartao.RestricaoCartao;
+import br.com.bruno.orange.desafioproposta.cartao.SolicitacaoCartaoRequest;
+import br.com.bruno.orange.desafioproposta.feign.VerificaRestricoes;
 import br.com.bruno.orange.desafioproposta.validacao.ExisteCpfOuCnpj;
+import feign.FeignException;
 
 @RestController
 @RequestMapping("proposta")
@@ -26,6 +30,17 @@ public class PropostaController {
 
 	@Autowired
 	private PropostaRepository repository;
+
+	@Autowired
+	private VerificaRestricoes verificaRestricoes;
+
+	public PropostaController(ExisteCpfOuCnpj existeCpfOuCnpj, PropostaRepository repository,
+			VerificaRestricoes verificaRestricoes) {
+		super();
+		this.existeCpfOuCnpj = existeCpfOuCnpj;
+		this.repository = repository;
+		this.verificaRestricoes = verificaRestricoes;
+	}
 
 	@InitBinder
 	public void init(WebDataBinder binder) {
@@ -38,8 +53,21 @@ public class PropostaController {
 			UriComponentsBuilder uriComponentsBuilder) {
 		Proposta proposta = request.toModel();
 		repository.save(proposta);
+		verificaRestricao(proposta);
 		URI uri = uriComponentsBuilder.path("/propostas/{id}").build(proposta.getId());
 		return ResponseEntity.created(uri).build();
+	}
+
+	private void verificaRestricao(Proposta proposta) {
+		try {
+			SolicitacaoCartaoRequest cartaoRequest = proposta.toModelCartao();
+			verificaRestricoes.verificaRestricao(cartaoRequest);
+			proposta.adicionaRestricao(RestricaoCartao.ELEGIVEL);
+			repository.save(proposta);
+		}catch (FeignException.UnprocessableEntity e) {
+			proposta.adicionaRestricao(RestricaoCartao.NAO_ELEGIVEL);		
+			repository.save(proposta);
+		}
 	}
 
 }
