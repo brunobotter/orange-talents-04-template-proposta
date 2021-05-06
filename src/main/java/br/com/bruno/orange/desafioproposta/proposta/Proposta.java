@@ -2,17 +2,14 @@ package br.com.bruno.orange.desafioproposta.proposta;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import br.com.bruno.orange.desafioproposta.cartao.Cartao;
+import br.com.bruno.orange.desafioproposta.cartao.CartaoClientResponse;
 import br.com.bruno.orange.desafioproposta.cartao.RestricaoCartao;
 import br.com.bruno.orange.desafioproposta.cartao.SolicitacaoCartaoRequest;
 import br.com.bruno.orange.desafioproposta.validacao.CpfOuCnpj;
@@ -47,6 +44,9 @@ public class Proposta {
 	@Enumerated(EnumType.STRING)
 	private RestricaoCartao restricao;
 
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	private Cartao cartao;
+
 	@Deprecated
 	public Proposta() {
 	}
@@ -71,6 +71,7 @@ public class Proposta {
 		this.salario = salario;
 		this.restricao = restricao;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -106,7 +107,14 @@ public class Proposta {
 
 	public void adicionaRestricao(RestricaoCartao elegivel) {
 		this.restricao = elegivel;
-		
+	}
+
+	public Cartao getCartao() {
+		return cartao;
+	}
+
+	public void adicionaCartao(Cartao cartao){
+		this.cartao = cartao;
 	}
 
 }
