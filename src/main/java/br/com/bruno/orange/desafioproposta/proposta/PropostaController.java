@@ -1,18 +1,17 @@
 package br.com.bruno.orange.desafioproposta.proposta;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.bruno.orange.desafioproposta.cartao.RestricaoCartao;
@@ -56,6 +55,17 @@ public class PropostaController {
 		verificaRestricao(proposta);
 		URI uri = uriComponentsBuilder.path("/propostas/{id}").build(proposta.getId());
 		return ResponseEntity.created(uri).build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<PropostaResponse> consultaProposta(@PathVariable("id") Long id){
+		Optional<Proposta> proposta = repository.findById(id);
+		if(proposta.isPresent()){
+			return ResponseEntity.ok(new PropostaResponse(proposta));
+		}else{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
 	}
 
 	private void verificaRestricao(Proposta proposta) {

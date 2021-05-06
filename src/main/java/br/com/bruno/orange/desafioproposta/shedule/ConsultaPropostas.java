@@ -33,12 +33,11 @@ public class ConsultaPropostas {
     @Scheduled(fixedDelayString = "${periodicidade.executa-operacao}")
    @Transactional
     private void consultaPropostasElegiveis() {
-       List<Proposta> proposta = propostaRepository.findByRestricao(RestricaoCartao.ELEGIVEL);
+       List<Proposta> proposta = propostaRepository.findByRestricaoAndCartao(RestricaoCartao.ELEGIVEL, null);
       try{
            for (Proposta lista: proposta ) {
                CartaoClientResponse novoCartao = cartao.cartaoParaProposta(lista.getId().toString());
                lista.adicionaCartao(novoCartao.toModel(lista));
-               lista.adicionaRestricao(RestricaoCartao.NAO_ELEGIVEL);
                propostaRepository.save(lista);
            }
        }catch (FeignException.UnprocessableEntity e){
