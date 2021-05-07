@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import br.com.bruno.orange.desafioproposta.cartao.Cartao;
-import br.com.bruno.orange.desafioproposta.cartao.CartaoClientResponse;
 import br.com.bruno.orange.desafioproposta.cartao.RestricaoCartao;
 import br.com.bruno.orange.desafioproposta.cartao.SolicitacaoCartaoRequest;
 import br.com.bruno.orange.desafioproposta.validacao.CpfOuCnpj;
@@ -44,7 +43,7 @@ public class Proposta {
 	@Enumerated(EnumType.STRING)
 	private RestricaoCartao restricao;
 
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@OneToOne
 	private Cartao cartao;
 
 	@Deprecated
