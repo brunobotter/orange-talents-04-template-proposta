@@ -93,20 +93,21 @@ services:
     depends_on:
       - analise
       - contas
-      - mysql
     environment:
-      ANALISES_URL: http://analise:9999/api/solicitacao
-      CARTOES_URL: http://contas:8888/api/cartoes
-      DATABASE_URL: jdbc:mysql://mysql:3305/propostas?createDatabaseIfNotExist=true
-      SPRING_PROFILES_ACTIVE: prod
-      DATABASE_USER: root
-      DATABASE_PASSWORD: root
+      - "ANALISES_URL=http://analise:9999/api/solicitacao"
+      - "CARTOES_URL=http://contas:8888/api/cartoes"
+      - "DATABASE_URL=jdbc:mysql://mysql:3307/propostas?createDatabaseIfNotExist=true"
+      - "SPRING_PROFILES_ACTIVE=prod"
+      - "DATABASE_USER=root"
+      - "DATABASE_PASSWORD=root"
+
   mysql:
-    image: 'mysql:latest'
+    image: 'mysql:8.0.24'
     volumes:
       - volume-mysql:/var/lib/mysql
+    network_mode: bridge
     ports:
-      - 3305:3306
+      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: root
