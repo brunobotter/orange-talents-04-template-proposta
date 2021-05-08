@@ -43,7 +43,7 @@ public class Proposta {
 	@Enumerated(EnumType.STRING)
 	private RestricaoCartao restricao;
 
-	@OneToOne
+	@OneToOne(cascade =CascadeType.MERGE)
 	private Cartao cartao;
 
 	@Deprecated

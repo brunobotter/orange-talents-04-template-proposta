@@ -1,9 +1,11 @@
 package br.com.bruno.orange.desafioproposta.cartao;
 
+import br.com.bruno.orange.desafioproposta.biometria.Biometria;
 import br.com.bruno.orange.desafioproposta.proposta.Proposta;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Cartao {
@@ -16,6 +18,9 @@ public class Cartao {
 
     @OneToOne(mappedBy = "cartao")
     private Proposta proposta;
+
+    @OneToMany(mappedBy = "cartao")
+    private List<Biometria> biometrias;
 
     @Deprecated
     public Cartao() {

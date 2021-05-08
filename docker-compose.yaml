@@ -81,6 +81,16 @@ services:
       LOG_LEVEL: INFO
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
 
+  mysql:
+    image: 'mysql:5.7'
+    volumes:
+      - volume-mysql:/var/lib/mysql
+    ports:
+      - 3305:3306
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=root"
+
   propostas:
     build:
       dockerfile: Dockerfile
@@ -93,24 +103,14 @@ services:
     depends_on:
       - analise
       - contas
+      - mysql
     environment:
       - "ANALISES_URL=http://analise:9999/api/solicitacao"
       - "CARTOES_URL=http://contas:8888/api/cartoes"
-      - "DATABASE_URL=jdbc:mysql://mysql:3307/propostas?createDatabaseIfNotExist=true"
+      - "DATABASE_URL=jdbc:mysql://mysql:3305/propostas?createDatabaseIfNotExist=true"
       - "SPRING_PROFILES_ACTIVE=prod"
       - "DATABASE_USER=root"
       - "DATABASE_PASSWORD=root"
-
-  mysql:
-    image: 'mysql:8.0.24'
-    volumes:
-      - volume-mysql:/var/lib/mysql
-    network_mode: bridge
-    ports:
-      - 3307:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: root
 
   transacoes:
     image: 'zupacademy/transacoes'

@@ -14,6 +14,6 @@ public interface Cartoes {
      * @param idProposta id da proposta para qual procura-se um cartão.
      * @return CartaoClientResponse objeto representando o cartão encontrado.
      */
-    @GetMapping("/api/cartoes")
+    @GetMapping
     public CartaoClientResponse cartaoParaProposta(@RequestParam(name = "idProposta") String idProposta);
 }
