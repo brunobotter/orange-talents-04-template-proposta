@@ -41,7 +41,7 @@ public class ConsultaPropostas {
                propostaRepository.save(lista);
            }
        }catch (FeignException.UnprocessableEntity e){
-
+          e.printStackTrace();
       }
     }
 }
