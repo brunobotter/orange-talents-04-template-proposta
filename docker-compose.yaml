@@ -33,7 +33,6 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: keycloak
       POSTGRES_HOST: postgres
-
   keycloak:
     image: jboss/keycloak
     ports:
@@ -107,7 +106,7 @@ services:
     environment:
       - "ANALISES_URL=http://analise:9999/api/solicitacao"
       - "CARTOES_URL=http://contas:8888/api/cartoes"
-      - "DATABASE_URL=jdbc:mysql://mysql:3305/propostas?createDatabaseIfNotExist=true"
+      - "DATABASE_URL=jdbc:mysql://mysql:3305/propostas?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=America/Sao_Paulo"
       - "SPRING_PROFILES_ACTIVE=prod"
       - "DATABASE_USER=root"
       - "DATABASE_PASSWORD=root"

@@ -21,7 +21,7 @@ import br.com.bruno.orange.desafioproposta.validacao.ExisteCpfOuCnpj;
 import feign.FeignException;
 
 @RestController
-@RequestMapping("proposta")
+@RequestMapping("propostas")
 public class PropostaController {
 
 	@Autowired

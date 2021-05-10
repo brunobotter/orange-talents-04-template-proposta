@@ -31,7 +31,6 @@ public class ConsultaPropostas {
         this.cartao = cartao;
     }
    @Scheduled(fixedDelayString = "${periodicidade.tentativa-numero-cartao}")
-   @Transactional
     private void consultaPropostasElegiveis() {
        List<Proposta> proposta = propostaRepository.findByRestricaoAndCartao(RestricaoCartao.ELEGIVEL, null);
       try{

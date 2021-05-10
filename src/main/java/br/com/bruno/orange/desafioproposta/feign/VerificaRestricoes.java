@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import br.com.bruno.orange.desafioproposta.cartao.SolicitacaoCartaoRequest;
 import br.com.bruno.orange.desafioproposta.cartao.SolicitacaoCartaoResponse;
 
-@FeignClient(url = "${analises.host}", name = "analise")
+@FeignClient(url = "${analises.host}", name = "analises")
 public interface VerificaRestricoes {
 
 	@PostMapping
