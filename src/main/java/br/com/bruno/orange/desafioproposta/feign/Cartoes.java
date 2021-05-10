@@ -1,9 +1,10 @@
 package br.com.bruno.orange.desafioproposta.feign;
 
+import br.com.bruno.orange.desafioproposta.bloqueio.BloqueioCartaoResponse;
+import br.com.bruno.orange.desafioproposta.bloqueio.BloqueioRequest;
 import br.com.bruno.orange.desafioproposta.cartao.CartaoClientResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(url = "${cartoes.host}", name = "cartoes")
 public interface Cartoes {
@@ -16,4 +17,7 @@ public interface Cartoes {
      */
     @GetMapping
     public CartaoClientResponse cartaoParaProposta(@RequestParam(name = "idProposta") String idProposta);
+
+    @PostMapping("/{id}/bloqueios")
+    public BloqueioCartaoResponse bloqueioCartao(@PathVariable(name = "id") String id, @RequestBody BloqueioRequest request);
 }

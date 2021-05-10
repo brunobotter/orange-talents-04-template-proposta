@@ -2,6 +2,7 @@ package br.com.bruno.orange.desafioproposta.cartao;
 
 import br.com.bruno.orange.desafioproposta.biometria.Biometria;
 import br.com.bruno.orange.desafioproposta.bloqueio.Bloqueio;
+import br.com.bruno.orange.desafioproposta.bloqueio.BloqueioCartao;
 import br.com.bruno.orange.desafioproposta.proposta.Proposta;
 
 import javax.persistence.*;
@@ -23,8 +24,9 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao")
     private List<Biometria> biometrias;
 
-    @OneToOne(mappedBy = "cartao")
-    private Bloqueio bloqueio;
+
+    @Enumerated(EnumType.STRING)
+    private BloqueioCartao statusCartao;
 
     @Deprecated
     public Cartao() {
@@ -52,7 +54,13 @@ public class Cartao {
         return proposta;
     }
 
-    public Bloqueio getBloqueio() {
-        return bloqueio;
+    public BloqueioCartao getStatusCartao() {
+        return statusCartao;
     }
+
+    public void adicionaBloqueio(){
+        this.statusCartao = BloqueioCartao.BLOQUEADO;
+    }
+
+
 }
