@@ -54,7 +54,7 @@ public class BloquerioController {
             bloqueio = bloqueioRepository.save(bloqueio);
             cartoes.bloqueioCartao(cartao.getNumeroCartao(), new BloqueioRequest(request));
             URI uri = uriComponentsBuilder.path("/bloqueio/{id}").build(bloqueio.getId());
-            return ResponseEntity.created(uri).build();
+            return ResponseEntity.ok(uri);
         } catch (FeignException.UnprocessableEntity e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,"Falha ao bloquear o cartão.");
         }
