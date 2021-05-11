@@ -1,6 +1,7 @@
-package br.com.bruno.orange.desafioproposta.bloqueio;
+package br.com.bruno.orange.desafioproposta.feign;
 
 public class BloqueioCartaoResponse {
+
 
     private String status;
 

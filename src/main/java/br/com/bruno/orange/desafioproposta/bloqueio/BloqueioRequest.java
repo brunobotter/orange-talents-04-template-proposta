@@ -9,14 +9,10 @@ import java.util.Optional;
 public class BloqueioRequest {
 
     @NotNull
-   private String sistemaResponsavel;
+    private String sistemaResponsavel;
 
     @Deprecated
     public BloqueioRequest() {
-    }
-
-    public BloqueioRequest(String sistemaResponsavel) {
-        this.sistemaResponsavel = sistemaResponsavel;
     }
 
     public BloqueioRequest(BloqueioRequest request) {
@@ -26,6 +22,7 @@ public class BloqueioRequest {
     public String getSistemaResponsavel() {
         return sistemaResponsavel;
     }
+
 
     public Bloqueio toModel(Cartao cartao, String ip, String userAgent) {
         return new Bloqueio(cartao,ip, userAgent);

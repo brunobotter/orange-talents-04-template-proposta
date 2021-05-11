@@ -1,16 +1,13 @@
 package br.com.bruno.orange.desafioproposta.bloqueio;
 
+import br.com.bruno.orange.desafioproposta.cartao.BloqueioCartao;
 import br.com.bruno.orange.desafioproposta.cartao.Cartao;
 import br.com.bruno.orange.desafioproposta.cartao.CartaoRepository;
-import br.com.bruno.orange.desafioproposta.cartao.RestricaoCartao;
 import br.com.bruno.orange.desafioproposta.feign.Cartoes;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -54,7 +51,7 @@ public class BloquerioController {
             bloqueio = bloqueioRepository.save(bloqueio);
             cartoes.bloqueioCartao(cartao.getNumeroCartao(), new BloqueioRequest(request));
             URI uri = uriComponentsBuilder.path("/bloqueio/{id}").build(bloqueio.getId());
-            return ResponseEntity.ok(uri);
+            return ResponseEntity.created(uri).build();
         } catch (FeignException.UnprocessableEntity e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,"Falha ao bloquear o cartão.");
         }
