@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
+
 public class ConsultaPropostas {
 
     @Autowired

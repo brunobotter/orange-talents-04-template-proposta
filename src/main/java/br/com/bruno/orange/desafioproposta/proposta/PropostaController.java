@@ -1,12 +1,13 @@
 package br.com.bruno.orange.desafioproposta.proposta;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +30,16 @@ public class PropostaController {
 
 	@Autowired
 	private PropostaRepository repository;
-
+	private final Tracer tracer;
 	@Autowired
 	private VerificaRestricoes verificaRestricoes;
 
 	public PropostaController(ExisteCpfOuCnpj existeCpfOuCnpj, PropostaRepository repository,
-			VerificaRestricoes verificaRestricoes) {
+							  Tracer tracer, VerificaRestricoes verificaRestricoes) {
 		super();
 		this.existeCpfOuCnpj = existeCpfOuCnpj;
 		this.repository = repository;
+		this.tracer = tracer;
 		this.verificaRestricoes = verificaRestricoes;
 	}
 
@@ -50,6 +52,8 @@ public class PropostaController {
 	@Transactional
 	public ResponseEntity<PropostaResponse> salvarProposta(@RequestBody @Valid PropostaRequest request,
 			UriComponentsBuilder uriComponentsBuilder) {
+		Span activeSpan = tracer.activeSpan();
+		activeSpan.setTag("user.email", "bruno.vales@zup.com.br");
 		Proposta proposta = request.toModel();
 		repository.save(proposta);
 		verificaRestricao(proposta);
