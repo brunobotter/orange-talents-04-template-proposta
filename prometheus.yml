@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 10s
+scrape_configs:
+  - job_name: proposta
+    scrape_interval: 5s
+    metrics_path: /api/metrics/red
+    static_configs:
+      - targets:
+          - proposal:8081
