@@ -11,6 +11,7 @@ import javax.validation.constraints.Positive;
 import br.com.bruno.orange.desafioproposta.cartao.Cartao;
 import br.com.bruno.orange.desafioproposta.cartao.RestricaoCartao;
 import br.com.bruno.orange.desafioproposta.cartao.SolicitacaoCartaoRequest;
+import br.com.bruno.orange.desafioproposta.encriptacao.EncriptacaoConverter;
 import br.com.bruno.orange.desafioproposta.validacao.CpfOuCnpj;
 
 @Entity
@@ -21,6 +22,7 @@ public class Proposta {
 	private Long id;
 
 	@CpfOuCnpj
+	@Convert(converter = EncriptacaoConverter.class)
 	private String cpfCnpj;
 
 	@Email
