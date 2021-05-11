@@ -30,10 +30,10 @@ public class Carteira {
     }
 
 
-    public Carteira(String email, Cartao cartao, String id) {
+    public Carteira(String email, Cartao cartao, String id, IdenticadorCarteira carteira) {
         this.email = email;
         this.cartao = cartao;
-        this.identificadorCarteira = IdenticadorCarteira.PAYPAL;
+        this.identificadorCarteira = carteira;
         this.assossiacaoId = id;
     }
 

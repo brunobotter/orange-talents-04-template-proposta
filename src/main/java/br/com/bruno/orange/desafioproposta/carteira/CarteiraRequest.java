@@ -27,6 +27,6 @@ public class CarteiraRequest {
     }
 
     public Carteira toModel(Cartao cartao, String id) {
-        return new Carteira(email, cartao, id);
+        return new Carteira(email, cartao, id, carteira);
     }
 }
