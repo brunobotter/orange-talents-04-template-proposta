@@ -14,26 +14,26 @@ public class ViagemRequest {
 
     @NotNull
     @NotBlank
-    private String destinoViagem;
+    private String destino;
 
     @Future
-    private LocalDate terminoViagem;
+    private LocalDate validoAte;
 
     public ViagemRequest(Cartao cartao, String destinoViagem, LocalDate terminoViagem) {
-        this.destinoViagem = destinoViagem;
-        this.terminoViagem = terminoViagem;
+        this.destino = destinoViagem;
+        this.validoAte = terminoViagem;
     }
 
 
-    public String getDestinoViagem() {
-        return destinoViagem;
+    public String getDestino() {
+        return destino;
     }
 
-    public LocalDate getTerminoViagem() {
-        return terminoViagem;
+    public LocalDate getValidoAte() {
+        return validoAte;
     }
 
-    public Viagem toModel( HttpServletRequest servlet) {
-        return new Viagem(servlet, destinoViagem, terminoViagem);
+    public Viagem toModel(HttpServletRequest servlet) {
+        return new Viagem(servlet, destino, validoAte);
     }
 }

@@ -1,6 +1,6 @@
 package br.com.bruno.orange.desafioproposta.cartao;
 
-public enum BloqueioCartao {
+public enum StatusCartao {
 
-    BLOQUEADO;
+    BLOQUEADO, VIAJANDO, OK;
 }

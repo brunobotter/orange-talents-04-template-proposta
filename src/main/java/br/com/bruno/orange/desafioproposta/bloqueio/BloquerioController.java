@@ -1,6 +1,6 @@
 package br.com.bruno.orange.desafioproposta.bloqueio;
 
-import br.com.bruno.orange.desafioproposta.cartao.BloqueioCartao;
+import br.com.bruno.orange.desafioproposta.cartao.StatusCartao;
 import br.com.bruno.orange.desafioproposta.cartao.Cartao;
 import br.com.bruno.orange.desafioproposta.cartao.CartaoRepository;
 import br.com.bruno.orange.desafioproposta.feign.Cartoes;
@@ -38,7 +38,7 @@ public class BloquerioController {
         if(cartao.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        if(cartao.get().getStatusCartao() == BloqueioCartao.BLOQUEADO){
+        if(cartao.get().getStatusCartao() == StatusCartao.BLOQUEADO){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,"Cartao ja bloqueado");
         }
         return solicitarBloqueio(cartao.get(), bloqueioRequest,httpRequest,uriComponentsBuilder);

@@ -35,8 +35,6 @@ public class Viagem {
     @NotBlank
     private String userAgente;
 
-    @Enumerated(EnumType.STRING)
-    private StatusViagem status;
 
     @Deprecated
     public Viagem() {
@@ -48,7 +46,6 @@ public class Viagem {
         this.instanteAvisoViagem = LocalDate.now();
         this.ipCliente = servlet.getRemoteAddr();
         this.userAgente = servlet.getHeader("User-Agent");
-        this.status = StatusViagem.VIAJANDO;
     }
 
 
@@ -73,7 +70,4 @@ public class Viagem {
         return userAgente;
     }
 
-    public StatusViagem getStatus() {
-        return status;
-    }
 }
